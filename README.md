@@ -147,25 +147,29 @@ bx cf bind-route-service mybluemix.net bluemix-mg --hostname bluemix-sample-app-
 ### Unbind route from service
 Execute this command when you are ready to delete the route service.
 
-```Bx cf unbind-route-service mybluemix.net bluemix-mg --hostname bluemix-sample-app-YOURINITIALS
+```
+bx cf unbind-route-service mybluemix.net bluemix-mg --hostname bluemix-sample-app-YOURINITIALS
 ```
 
 ## View the CF logs
 You can tail the logs to validate everything is working correctly.  
 
 1. Open a terminal tab and execute the following.
-```bx cf logs bluemix-sample-app-YOURINITIALS
+```
+bx cf logs bluemix-sample-app-YOURINITIALS
 ```
 
 2. Open a new terminal tab and execute the following.
-```Bx cf logs edgemicro-app-bluemix
+```
+bx cf logs edgemicro-app-bluemix
 ```
 
 ## Test
 
 1. Execute the following command and you will see the request is routed to Apigee Microgateway.
 
-```curl bluemix-sample-app-YOURINITIALS.mybluemix.net/hello
+```
+curl bluemix-sample-app-YOURINITIALS.mybluemix.net/hello
 ```
 
 2. View the logging terminal tab of the Microgateway and you should see the request there.
