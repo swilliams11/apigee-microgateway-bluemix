@@ -44,7 +44,7 @@ You must create an Edgemicro aware proxy in Apigee Edge so that the Microgateway
 
 2. Create a new proxy.
    * proxy name: edgemicro_bluemix-sample-app-YOURINITIALS-mybluemix-net
-   * basepath: bluemix-sample-app-YOURINITIALS-mybluemix-net
+   * basepath: bluemix-sample-app-YOURINITIALS-mybluemix.net
    * target: https://bluemix-sample-app-YOURINITIALS.mybluemix.net
 
 3. Save the proxy.
