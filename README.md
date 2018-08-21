@@ -175,3 +175,6 @@ curl bluemix-sample-app-YOURINITIALS.mybluemix.net/hello
 2. View the logging terminal tab of the Microgateway and you should see the request there.
 
 3. View the logging terminal tab of the sample app and you should see the request there as well.
+
+
+# This is not an official Google product
