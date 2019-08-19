@@ -9,6 +9,8 @@ applications:
   env:
     EDGEMICRO_KEY: 'microgateway-key'
     EDGEMICRO_SECRET: 'microgateway-secret'
-    EDGEMICRO_CONFIG_DIR: '/app/config'
+    EDGEMICRO_CONFIG: '/app/config'
     EDGEMICRO_ENV: 'env-name'
     EDGEMICRO_ORG: 'org-name'
+  docker:
+    image: gcr.io/apigee-microgateway/edgemicro:latest
