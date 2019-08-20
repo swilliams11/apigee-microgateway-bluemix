@@ -1,0 +1,18 @@
+---
+applications:
+- name: edgemicro-app
+  memory: 512M
+  instances: 1
+  host: edgemicro-app
+  random-route: false
+  env:
+    EDGEMICRO_KEY: 'microgateway-key'
+    EDGEMICRO_SECRET: 'microgateway-secret'
+    EDGEMICRO_CONFIG: 'base64(config_file)'
+    EDGEMICRO_ENV: 'env-name'
+    EDGEMICRO_ORG: 'org-name'
+    EDGEMICRO_PORT: 8080
+    EDGEMICRO_PROCESSES: 2 # you should restrict the number of worker threads are created in the container
+    #DEBUG: '*' # turn on debugging
+  docker:
+    image: YOUR_CONTAINER_REGISTRY_GOES_HERE/edgemicro:latest # i.e. if you are using Google Container Registry gcr.io/YOUR_GCP_PROJECT/edgemicro:latest
