@@ -18,7 +18,7 @@ The purpose of this repository is to document how to protect your apps running i
     * [cloud-foundry-route-service-preoauth](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) which updates the request URI path to the `x-cf-forwarded-for` url.
     * oauth to protect your Microservice with the API Keys or JWTs.
     * [cloud-foundry-route-service](https://github.com/apigee/microgateway-plugins/tree/master/cloud-foundry-route-service) which changes the target path to the correct path expected by your CF app.  
-*  [Deploy a custom Microgateway image without custom plugins](#deploy-a-custom-microgateway-image-without-any-custom-plugins)
+* [Deploy a custom Microgateway image without custom plugins](#deploy-a-custom-microgateway-image-without-any-custom-plugins)
   * This demonstrates how to deploy MG as a Docker image without custom plugins.  
 * [Deploy Microgateway as a app with the default Google/Apigee docker image ](#deploy-the-default-microgateway-image-without-any-custom-plugins)
   * This demonstrates how to deploy the default MG docker image which is hosted in Google Container Registry.
