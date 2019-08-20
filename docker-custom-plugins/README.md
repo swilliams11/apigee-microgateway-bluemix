@@ -7,7 +7,7 @@ This folder contains a modified Docker file
 
 This directory demonstrates how to create a Microgateway Docker image with custom plugins included.  
 
-You custom plugins should be placed in the [plugins](plugins) folder.  
+Your custom plugins should be placed in the [plugins](plugins) folder.  Make sure to execute `npm install` in the custom plugin directory before you submit the Docker build.  
 
 ## Build Docker image with Google Cloud Platform
 ```

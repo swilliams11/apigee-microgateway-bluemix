@@ -9,9 +9,24 @@ The purpose of this repository is to document how to protect your apps running i
 * Can I just execute `cf push -b https://github.com/cf-platform-eng/meta-buildpack`?
   No, this command does not work either. It still has to upload the meta-buildpack to your SaaS org, which is not allowed.
 
+# TOC
+* [Summary](#summary)
+* [Prereqs](#prereqs)
+* [Protect your IBM Bluemix app with Apigee Microgateway hosted as a Docker image with custom plugins](#steps-to-protect-your-ibm-bluemix-saas-app-with-apigee-microgateway-docker-image)
+  * This is the best practice approach to managing multiple Microgateway instances in a Cloud Foundry based environment. Microgateway is deployed as a Docker image within a container registry.  
+  * This approach uses 3 plugins
+    * [cloud-foundry-route-service-preoauth](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) which updates the request URI path to the `x-cf-forwarded-for` url.
+    * oauth to protect your Microservice with the API Keys or JWTs.
+    * [cloud-foundry-route-service](https://github.com/apigee/microgateway-plugins/tree/master/cloud-foundry-route-service) which changes the target path to the correct path expected by your CF app.  
+*  [Deploy a custom Microgateway image without custom plugins](#deploy-a-custom-microgateway-image-without-any-custom-plugins)
+  * This demonstrates how to deploy MG as a Docker image without custom plugins.  
+* [Deploy Microgateway as a app with the default Google/Apigee docker image ](#deploy-the-default-microgateway-image-without-any-custom-plugins)
+  * This demonstrates how to deploy the default MG docker image which is hosted in Google Container Registry.
+* [Deploy Microgateway by cloning the Microgateway repository](#demo-of-apigee-microgateway-with-ibm-bluemix-app-without-oauth-plugin)
+  * This was the original documentation and is included here for posterity, but it is not a best practice to use this approach. Please use the [Protect your IBM Bluemix app with Apigee Microgateway hosted as a Docker image with custom plugins](#steps-to-protect-your-ibm-bluemix-saas-app-with-apigee-microgateway-docker-image)
 
 # Summary
-The following steps describe how to protect your IBM Bluemix SaaS apps with Apigee Edge Microgateway. This is accomplished by creating a user defined service instance, and binding the user defined service instance to your Bluemix app.  All of these steps will need to be repeated for each Bluemix app that you create.
+The following steps describe how to protect your IBM Bluemix SaaS apps with Apigee Edge Microgateway. This is accomplished by creating a user defined service instance, and binding the user defined service instance to your Bluemix app.  All of these steps will need to be repeated for each Bluemix app that you create so consider automating this with a CI/CD tool, such as Jenkins or Concourse.
 
 # Prereqs
 * [Apigee Edge SaaS](https://login.apigee.com/sign__up) or Apigee Private Cloud
@@ -75,7 +90,7 @@ cd docker-custom-plugins
 
 Create a [project in Google Cloud Platform](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 
-Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the [`cloud-foundry-route-service-preauth`](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) directory.  
+Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the [`cloud-foundry-route-service-preoauth`](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) directory.  
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
@@ -110,7 +125,7 @@ env:
   EDGEMICRO_ENV: 'env-name'
   EDGEMICRO_ORG: 'org-name'
   EDGEMICRO_PORT: 8080
-  EDGEMICRO_PROCESSES: 2 # you should restrict the number of worker threads are created in the container
+  EDGEMICRO_PROCESSES: 2 # you should restrict the number of worker threads that are created in the container
   #DEBUG: '*' # turn on debugging
 docker:
   image: YOUR_CONTAINER_REGISTRY_GOES_HERE/edgemicro:v1 # i.e. if you are using Google Container Registry gcr.io/YOUR_GCP_PROJECT/edgemicro:v1
@@ -172,7 +187,7 @@ bx cf unbind-route-service mybluemix.net bluemix-mg --hostname cf-nodejs
 
 
 # Deploy a custom Microgateway image without any custom plugins
-This section describes how to deploy a custom Microgateway image without any custom plugins and assumes you are using the Google Cloud Platform's container registry.  This section deploys Microgateway without an oauth plugin included in the plugins directory. Please don't use this approach in production unless your are sure you don't want your Microgateway authorize requests.    
+This section describes how to deploy a custom Microgateway image without any custom plugins and assumes you are using the Google Cloud Platform's container registry.  This section deploys Microgateway without an oauth plugin included in the plugins section in Microgateway configuration file. Please don't use this approach in production unless your are sure you don't want your Microgateway to authorize requests.    
 
 ## 1) Deploy the Microgateway as an app in Bluemix
 ```
