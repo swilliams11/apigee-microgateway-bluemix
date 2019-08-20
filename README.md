@@ -13,7 +13,7 @@ The purpose of this repository is to document how to protect your apps running i
 * [Summary](#summary)
 * [Prereqs](#prereqs)
 * [Protect your IBM Bluemix app with Apigee Microgateway hosted as a Docker image with custom plugins](#steps-to-protect-your-ibm-bluemix-saas-app-with-apigee-microgateway-docker-image)
-  * This is the best practice approach to managing multiple Microgateway instances in a Cloud Foundry based environment. Microgateway is deployed as a Docker image within a container registry.  
+  * This is the best practice approach to managing multiple Microgateway instances in a Cloud Foundry based environment. Microgateway is deployed from a Docker image hosted within a container registry.  
   * This approach uses 3 plugins
     * [cloud-foundry-route-service-preoauth](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) which updates the request URI path to the `x-cf-forwarded-for` url.
     * oauth to protect your Microservice with the API Keys or JWTs.
