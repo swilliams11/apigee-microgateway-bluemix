@@ -17,7 +17,7 @@ var https = require('https');
  * limitations under the License.
  */
 
-var pathOnly = false;
+//var pathOnly = false;
 
 /**
  * Changes target host/path according to Cloud Foundry "magic header".
@@ -49,18 +49,10 @@ function retarget (req, res, next) {
   const cfPath = cfurl.slice(p) || '/'
 
   debug('x-cf-forwarded-url: ' + cfurl);
-  debug('old targetHostname: '+req.targetHostname);
-  debug('old targetPath: ' + req.targetPath);
   debug('req.reqUrl.path: ' + req.reqUrl.path);
-  if (cfHostname && !pathOnly) {
-    req.targetHostname = cfHostname
-  }
-  req.targetPath = '/' + cfHostname + cfPath;
-  req.reqUrl.path = req.targetPath;
-  debug('new req.reqUrl.path: ' + req.reqUrl.path);
-  debug('new targetHostname: '+req.targetHostname);
-  debug('new targetPath: ' + req.targetPath);
 
+  req.reqUrl.path = '/' + cfHostname + cfPath;
+  debug('new req.reqUrl.path: ' + req.reqUrl.path);
   next()
 }
 
@@ -76,7 +68,7 @@ module.exports.init = function (config, logger, stats) {
   //external consumers will still access the app from the external route
   //but instead of MG forwardinf the request back to the external route,
   //it will use an internal route (if the proxy endpoint had such a target)
-  pathOnly = config['pathOnly'] || false;
+  //pathOnly = config['pathOnly'] || false;
 
   return {
     onrequest: retarget
