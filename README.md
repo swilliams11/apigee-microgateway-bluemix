@@ -75,7 +75,7 @@ cd docker-custom-plugins
 
 Create a [project in Google Cloud Platform](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 
-Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the [`cloud-foundry-route-service-preauth`](microgateway-app-custom-plugins/plugins/cloud-foundry-route-service-preauth) directory.  
+Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the [`cloud-foundry-route-service-preauth`](docker-custom-plugins/plugins/cloud-foundry-route-service-preauth) directory.  
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
