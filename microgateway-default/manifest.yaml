@@ -1,0 +1,17 @@
+---
+applications:
+- name: edgemicro-app
+  memory: 512M
+  instances: 1
+  host: edgemicro-app
+  random-route: false
+  env:
+    EDGEMICRO_KEY: 'microgateway-key'
+    EDGEMICRO_SECRET: 'microgateway-secret'
+    EDGEMICRO_CONFIG: 'base64(config_file)'
+    EDGEMICRO_ENV: 'env-name'
+    EDGEMICRO_ORG: 'org-name'
+    EDGEMICRO_PORT: 8080
+    #DEBUG: '*' # turn on debugging
+  docker:
+    image: gcr.io/apigee-microgateway/edgemicro:latest
