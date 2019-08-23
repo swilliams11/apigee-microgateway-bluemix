@@ -22,20 +22,22 @@ The purpose of this repository is to document how to protect your apps running i
   * This demonstrates how to deploy MG as a Docker image without custom plugins.  
 * [Deploy Microgateway as a app with the default Google/Apigee docker image ](#deploy-the-default-microgateway-image-without-any-custom-plugins)
   * This demonstrates how to deploy the default MG docker image which is hosted in Google Container Registry.
+* [Google Container Registry](#google-container-registry)
+  * Read this section if you need to know how to make the Google Container Registry (GCR) public or if you need to know how to access private images in GCR from a `manifest.yaml` file.
 * [Deploy Microgateway by cloning the Microgateway repository](#demo-of-apigee-microgateway-with-ibm-bluemix-app-without-oauth-plugin)
   * This was the original documentation and is included here for posterity, but it is not a best practice to use this approach. Please use the [Protect your IBM Bluemix app with Apigee Microgateway hosted as a Docker image with custom plugins](#steps-to-protect-your-ibm-bluemix-saas-app-with-apigee-microgateway-docker-image)
 
 # Summary
-The following steps describe how to protect your IBM Bluemix SaaS apps with Apigee Edge Microgateway. This is accomplished by creating a user defined service instance, and binding the user defined service instance to your Bluemix app.  All of these steps will need to be repeated for each Bluemix app that you create so consider automating this with a CI/CD tool, such as Jenkins or Concourse.
+Applications hosted in IBM Bluemix SaaS should use a suitable API management platform to expose those services.  This repository describes how to protect your IBM Bluemix SaaS applications with the Apigee Edge Microgateway. Developers can protect their applications by creating a user defined service instance, and binding that instance to your Bluemix application.  All of these steps will need to be repeated for each Bluemix application that you create so consider automating this with a CI/CD tool, such as Jenkins or Concourse.
 
-# Prereqs
+# Prerequisites
 * [Apigee Edge SaaS](https://login.apigee.com/sign__up) or Apigee Private Cloud
 * [Apigee Microgateway](https://www.npmjs.com/package/edgemicro)
 * [IBM Bluemix SaaS](https://idaas.iam.ibm.com/idaas/mtfim/sps/authsvc?PolicyId=urn:ibm:security:authentication:asf:basicldapuser)
 * [IBM Bluemix CLI](https://developer.ibm.com/courses/labs/1-install-bluemix-command-line-interface-cli-dwc020/)
 * [Node.js](https://nodejs.org/en/)
 * [OpenSSL](https://www.openssl.org/)
-* You need to understand the Apigee concepts and Microgateway concepts as well.
+* You need to understand the Apigee and Microgateway concepts.
 * You should know how to create an Apigee Edge proxy.
 
 ## Install and Configure the Microgateway
@@ -94,6 +96,8 @@ Create the docker image in Google Container Registry with the following command.
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
+
+**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR public or to understand how to access a private GCR.**
 
 ### 2) Deploy the Microgateway as an app in Bluemix
 ```
@@ -201,6 +205,7 @@ Create the docker image in Google Container Registry with the following command.
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
+**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR public or to understand how to access a private GCR.**
 
 ### 2) Deploy the Microgateway as an app in Bluemix
 ```
@@ -290,19 +295,59 @@ or
 bx cf push -f manifest.yaml
 ```
 
+# Google Container Registry (GCR)
+A container registry created in GCR is private by default.  Follow the steps listed in the [serving images publicly](https://cloud.google.com/container-registry/docs/access-control#serving_images_publicly) documentation to make the registry public.  
+
+## Access a private GCR
+All images uploaded to GCR are private by default.  If your image is private and you need to access it from your `manifest.yaml` file then you should complete the steps below which are summarized from [GCR access control](https://cloud.google.com/container-registry/docs/access-control) and [Cloud Foundry App Manifest](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html#docker).
+
+1. Create a Google service account with a read-only pull permission (Storage Object Viewer; roles/storage.objectViewer).
+2. Download the Google JSON key from Google.
+3. Update the App `manifest.yaml` to include the following
+```
+docker:
+    image: docker-image-repository/docker-image-name
+    username: GCP_service_account
+```
+4. You can use one of the following approaches for the docker password.
+* include an environment variable named `CF_DOCKER_PASSWORD` with the content of the Google key file
+```
+env:
+    CF_DOCKER: docker-image-repository/docker-image-name
+    username: docker-user-name
+    CF_DOCKER_PASSWORD: 'CONTENT_OF_GOOGLE_JSON_KEY'
+```
+* use variable substitution in the app manifest.
+```
+env:
+    CF_DOCKER: docker-image-repository/docker-image-name
+    username: docker-user-name
+    CF_DOCKER_PASSWORD: ((docker_password))
+```
+Then use the following command line
+```
+bx cf push --vars-file /PATH/vars.yml
+```
+or
+```
+bx cf push --var docker_password=$(cat /PATH/google_key.json)
+```
+
 # Demo of Apigee Microgateway with IBM Bluemix App without OAuth plugin
 **Please complete the prerequisites listed above first.**
 
 This section describes how to deploy Microgateway as an app in front of your IBM Bluemix application.
-You clone the microgateway repository and push that to your IBM Bluemix org and space.  
+You clone the Microgateway repository and push that to your IBM Bluemix org and space.  
 
 ## Benefits/Drawbacks
 ### Benefits
-* Uses the most current microgateway app
+* uses the most current Microgateway app
+* allow you to easily include custom plugins in the plugins directory
 
 ### Drawbacks
-* Requires a significant amount of time to upload all files in the Microgateway directory
-* Difficult to maintain across multiple teams
+* requires a significant amount of time to upload all files in the Microgateway directory to IBM Bluemix SaaS
+* difficult to maintain across multiple teams
+* limits governance of Microgateway versions
 
 Due to the drawbacks I recommend that you manage [Microgateway as Docker image](#steps-to-protect-your-ibm-bluemix-saas-app-with-apigee-microgateway-docker-image) instead.
 
