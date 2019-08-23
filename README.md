@@ -295,8 +295,8 @@ or
 bx cf push -f manifest.yaml
 ```
 
-# Google Container Registry (GCR)
-A container registry created in GCR is private by default.  Follow the steps listed in the [serving images publicly](https://cloud.google.com/container-registry/docs/access-control#serving_images_publicly) documentation to make the registry public.  
+# Google Container Registry
+Google Container Registry (GCR) images are private by default.  Follow the steps listed in the [serving images publicly](https://cloud.google.com/container-registry/docs/access-control#serving_images_publicly) documentation to make the registry public.  
 
 ## Access a private GCR
 All images uploaded to GCR are private by default.  If your image is private and you need to access it from your `manifest.yaml` file then you should complete the steps below which are summarized from [GCR access control](https://cloud.google.com/container-registry/docs/access-control) and [Cloud Foundry App Manifest](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html#docker).
