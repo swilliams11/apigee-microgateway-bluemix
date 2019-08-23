@@ -342,7 +342,7 @@ You clone the Microgateway repository and push that to your IBM Bluemix org and 
 ## Benefits/Drawbacks
 ### Benefits
 * uses the most current Microgateway app
-* allow you to easily include custom plugins in the plugins directory
+* allows you to easily include custom plugins in the plugins directory
 
 ### Drawbacks
 * requires a significant amount of time to upload all files in the Microgateway directory to IBM Bluemix SaaS
