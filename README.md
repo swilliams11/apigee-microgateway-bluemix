@@ -72,12 +72,11 @@ You must create an Edgemicro aware proxy in Apigee Edge so that the Microgateway
 # Steps to Protect your IBM Bluemix SaaS App with Apigee Microgateway Docker image
 **Please complete the prerequisites listed above first.**
 
-The recommended best practice to manage multiple Microgateway instances in a Cloud Foundry based environment is to use the a Microgateway Docker image.  
+The recommended best practice to manage multiple Microgateway instances in a Cloud Foundry based environment is to use the Microgateway Docker image.  
 
-This section describes how to Microgateway as an app from a Docker registry and protect your IBM Bluemix application with the `oauth` plugin.  It uses a custom plugin located in the [docker-custom-plugins/plugins](docker-custom-plugins/plugins) directory.
+This section describes how to deploy Microgateway as an app from a Docker registry and protect your IBM Bluemix application with the `oauth` plugin.  It uses a custom plugin located in the [docker-custom-plugins/plugins](docker-custom-plugins/plugins) directory.
 
 ## Deploy a custom Microgateway image with a custom plugin
-This section describes how to deploy the Microgateway as an app using a Docker image with custom plugins. Complete the following steps
 
 1. You will create your own Microgateway Docker image and deploy to your own Docker registry.  This example use Google Container Register.  
 2. Deploy the Microgateway  as an app.
