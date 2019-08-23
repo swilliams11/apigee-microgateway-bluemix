@@ -7,7 +7,7 @@ The purpose of this repository is to document how to protect your apps running i
 * Can I use the [Edge Microgateway Decorator](https://github.com/swilliams11/edgemicro-decorator)?
   The Edge Microgateway Decorator was the previous incarnation of the Apigee Service Broker - Microgateway Coresident plan.  This decorator requires the [cf-metabuildpack](https://github.com/cf-platform-eng/meta-buildpack). IBM Bluemix SaaS does not allow you to modify the buildpacks, therefore, you can't upload the meta-buildpack or the Edge Microgateway Decorator.
 * Can I just execute `cf push -b https://github.com/cf-platform-eng/meta-buildpack`?
-  No, this command does not work either. It still has to upload the meta-buildpack to your SaaS org, which is not allowed.
+  No, this command does not work either. It still has to upload the meta-buildpack to your SaaS organization and this is not allowed.
 
 # TOC
 * [Summary](#summary)
