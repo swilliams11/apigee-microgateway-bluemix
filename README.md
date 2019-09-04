@@ -193,7 +193,7 @@ bx cf unbind-route-service mybluemix.net bluemix-mg --hostname cf-nodejs
 # Deploy a custom Microgateway image without any custom plugins
 This section describes how to deploy a custom Microgateway image without any custom plugins and assumes you are using the Google Cloud Platform's container registry.  This section deploys Microgateway without an oauth plugin included in the plugins section in Microgateway configuration file. Please don't use this approach in production unless your are sure you don't want your Microgateway to authorize requests.    
 
-## 1) Deploy the Microgateway as an app in Bluemix
+### 1) Deploy the Microgateway as an app in Bluemix
 ```
 cd docker
 ```
@@ -252,7 +252,7 @@ bx cf push -f manifest.yaml
 
 
 # Deploy the default Microgateway image without any custom plugins
-You can use the Microgateway Docker image located at gcr.io/apigee-microgateway/edgemicro:latest
+You can use the Microgateway Docker image located at https://gcr.io/apigee-microgateway/edgemicro:latest
 
 ## 1) Deploy the Microgateway as an app in Bluemix
 ```
