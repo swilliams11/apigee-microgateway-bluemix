@@ -92,12 +92,12 @@ cd docker-custom-plugins
 
 Create a [project in Google Cloud Platform](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 
-Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the [`cloud-foundry-route-service-preoauth`](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) directory.  
+Create the docker image in Google Container Registry with the following command.  This will copy all plugins in the plugins directory into the image and create the image in Google Container Registry.  The documentation for the `cloud-foundry-route-service-preoauth` plugin is located in the  [`cloud-foundry-route-service-preoauth`](docker-custom-plugins/plugins/cloud-foundry-route-service-preoauth) directory.  
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
 
-**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR public or to understand how to access a private GCR.**
+**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR image public or to understand how to access a private GCR image.**
 
 ### 2) Deploy the Microgateway as an app in Bluemix
 ```
@@ -205,7 +205,7 @@ Create the docker image in Google Container Registry with the following command.
 ```
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/edgemicro:v1 .
 ```
-**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR public or to understand how to access a private GCR.**
+**Review the [Google Container Registry](#google-container-registry) section for instructions on how to make a GCR image public or to understand how to access a private GCR image.**
 
 ### 2) Deploy the Microgateway as an app in Bluemix
 ```
